@@ -1,17 +1,14 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap"
+import { Button, Card, Col, Container, Row } from "react-bootstrap"
+import { useNavigate, useParams } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faPhone, faCalendarCheck, faCircleCheck, faBuildingUser, faMoneyCheckDollar } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useParams } from "react-router-dom"
-import EditPeople from '../EditPeople/EditPeople'
 
 function PeopleDetails({ apiURL }) {
     const [employee, setEmployee] = useState({})
     const { id } = useParams()
     const navigate = useNavigate()
-
-    const stack = ["JS", "HTML", "CSS", "MongoDB", "Express", "NodeJS", "React"]
 
     useEffect(() => {
         try {
@@ -38,8 +35,6 @@ function PeopleDetails({ apiURL }) {
                     <Card.Title className="m-0">
                         <h3>{employee.name}</h3>
                     </Card.Title>
-                    {employee.active && <h6 className="text-success">Este funcionário está ativo na empresa</h6>}
-                    {!employee.active && <h6 className="text-secondary">Este funcionário não está ativo na empresa</h6>}
                 </Card.Header>
                 <Card.Body>
                     <Card.Title>Informações trabalhista</Card.Title>
@@ -64,8 +59,7 @@ function PeopleDetails({ apiURL }) {
                     <Row>
                         <Card.Title>Informações de contato</Card.Title>
                         <Col>
-                            <Card.Text class
-                            >
+                            <Card.Text>
                                 <FontAwesomeIcon icon={faAt} /> {employee.email}
                             </Card.Text>
                         </Col>
@@ -77,10 +71,10 @@ function PeopleDetails({ apiURL }) {
                     </Row>
                     <Row className="mt-3">
                         <Col>
-                            <EditPeople />
+                            Editar funcionário
                         </Col>
                         <Col>
-                            <Button variant="secondary" onClick={() => navigate(-1)}>Voltar</Button>
+                            <Button variant="secondary">Voltar</Button>
                         </Col>
                         <Col>
                             <Button

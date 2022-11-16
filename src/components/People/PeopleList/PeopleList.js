@@ -29,7 +29,7 @@ function PeopleList({ apiURL }) {
                 <td>{employee.department}</td>
                 <td>{employee.status}</td>
                 <td>
-                    <Button variant="info">
+                    <Button variant="info" size="sm">
                         <Link className="nav-link" to={`/funcionarios/${employee._id}`}>Ver detalhes</Link>
                     </Button>
                 </td>
@@ -39,9 +39,9 @@ function PeopleList({ apiURL }) {
 
     return (
         <Container>
-            {isLoading && <Spinner animation="border" />}
+            {isLoading && <Spinner className="" animation="border" />}
             {!isLoading &&
-                <Table>
+                <Table className="mt-4" striped bordered hover>
                     <thead>
                         <tr>
                             <th>Nome</th>

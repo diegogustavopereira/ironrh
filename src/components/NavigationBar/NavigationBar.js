@@ -9,7 +9,7 @@ function NavigationBar() {
     }
 
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
                 <Navbar.Brand>IronRH</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

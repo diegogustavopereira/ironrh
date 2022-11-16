@@ -11,7 +11,7 @@ function App() {
   const apiURL = "https://ironrest.cyclic.app/ironrh-91"
 
   return (
-    <div className="App">
+    <div className="App bg-light" style={{ height:'100vh'}}>
       <NavigationBar />
       <Routes>
         <Route path="/" element={ <HomePage /> } />

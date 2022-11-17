@@ -2,12 +2,17 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 
 function NavigationBar() {
+    // -------- CONDICIONAL DE NAVEGAÇÃO --------
+    // cria uma constante para localização
     const location = useLocation()
 
+    // se o caminho que o usuário estiver for a raiz
     if(location.pathname === "/") {
+        // então a navbar fica null, ou seja, não irá aparecer
         return null
     }
 
+    // -------- RENDERIZAÇÃO DE HTML --------
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container>

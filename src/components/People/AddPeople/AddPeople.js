@@ -1,37 +1,73 @@
 import axios from "axios"
 import { Button, Col, Container, Form, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify'
 
+// -------- SETAGEM DOS PROPS --------
 function AddPeople({ apiURL, form, setForm }) {
+    // -------- CRIAÇÃO DA CONSTANTE DE NAVEGAÇÃO --------
     const navigate = useNavigate()
 
+    // -------- EVENTO DE MUDANÇA --------
+    // o change monitora todas as mudanças do formulário, que é um componente controlado
     const handleChange = (e) => {
-        // monitoramento do checkbox
+        // ele identifica se estamos manipulando o checkbox através do seu name
         if(e.target.name === "active") {
+            // caso a condição for verdadeira ele insere a mudança do checkbox dentro do estado do form
             setForm({...form, active: e.target.checked})
+            // sai do if e retorna para a função
             return
         }
 
-        //monitoramento dos inputs
+        // atualiza o estado do formulário monitorando todos os inputs
         setForm({...form, [e.target.name]: e.target.value})
     }
 
+    // -------- EVENTO DE ENVIO DE FORM --------
+    // o submit gera um código ao enviarmos o formulário
     const handleSubmit = async (e) => {
+        // evita o carregamento da página
         e.preventDefault()
 
         try {
-            // requisição axios.post
+            // espera o axios realizar sua requisição, passando a api e o formulário com os dados que serão inseridos na api
             await axios.post(apiURL, form)
-            // navegação para a página de funcionários
+            // navega para a página da listagem
             navigate("/funcionarios")
+
+            // mensagem flutuante de sucesso para o usuário
+            toast.success('Novo funcionário foi cadastrado!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         } catch (error) {
+            // imprime o erro no console
             console.log(error)
+
+            // mensagem flutuante para aviso ao usuário
+            toast.error('Não foi possível cadastrar novo funcionário', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     }
 
+    // -------- RENDERIZAÇÃO DE HTML --------
     return (
         <Container>
-            <h2>Cadastrar novo funcionário</h2>
+            <h2 className="my-5">Cadastrar novo funcionário</h2>
             <Form onSubmit={ handleSubmit }>
                 <Row>
                     <Col className="d-flex justify-content-center align-items-center">
@@ -135,7 +171,7 @@ function AddPeople({ apiURL, form, setForm }) {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button variant="success" type="submit">Cadastrar funcionário</Button>
+                <Button className="mt-4" variant="success" type="submit">Cadastrar funcionário</Button>
             </Form>
         </Container>
     )

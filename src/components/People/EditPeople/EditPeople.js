@@ -2,49 +2,94 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
+// -------- SETAGEM DE PROPS --------
 function EditPeople({ id, apiURL, form, setForm }) {
+    // -------- CRIAÇÃO DE CONSTANTE PARA NAVEGAÇÃO --------
     const navigate = useNavigate()
+    // -------- CRIAÇÃO DE EVENTO PRA MODAL --------
     const [show, setShow] = useState(false);
 
+    // -------- FUNÇÃO PARA MUDANÇA DE MODAL --------
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // -------- SETAGEM DE USE EFFECT --------
     useEffect(() => {
+        // criação de uma função para capturar a requisição
         const fetchEmployee = async () => {
             const response = await axios.get(`${apiURL}/${id}`)
+            // traz os dados do usuário existente para o formulário
             setForm(response.data)
         }
 
         fetchEmployee()
-    }, [id])
+    }, [apiURL, setForm, id])
 
-    // monitorar todas as mudanças do nosso formulário
+    // -------- EVENTO DE MUDANÇA --------
+    // o change monitora todas as mudanças do formulário, que é um componente controlado
     const handleChange = (e) => {
-        // monitora alterações no checkbox
+        // ele identifica se estamos manipulando o checkbox através do seu name
         if(e.target.name === "active") {
+            // caso a condição for verdadeira ele insere a mudança do checkbox dentro do estado do form
             setForm({...form, active: e.target.checked})
+            // sai do if e retorna para a função
             return
         }
 
-        // monitora alterações nos outros inputs
+        // atualiza o estado do formulário monitorando todos os inputs
         setForm({...form, [e.target.name]: e.target.value})
     }
 
+    // -------- EVENTO DE ENVIO DE FORM --------
+    // o submit gera um código ao enviarmos o formulário
     const handleSubmit = async (e) => {
+        // evita o carregamento da página
         e.preventDefault()
 
         try {
+            // faz uma cópia do estado do formulário até o momento
             const clone = { ...form }
+            //exclui o id daquele objeto
             delete clone._id
 
+            // chama a requisição de atualização
             await axios.put(`${apiURL}/${id}`, clone)
+            
+            // navega até a página de listagem
             navigate("/funcionarios")
+
+            // mensagem flutuante de sucesso para o usuário
+            toast.success('Funcionário atualizado!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         } catch (error) {
+            // imprime o erro no console
             console.log(error)
+
+            // mensagem flutuante para aviso ao usuário
+            toast.error('Não foi possível editar funcionário', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     }
 
+    // -------- RENDERIZAÇÃO DE HTML --------
     return (
         <div>
             <Button variant="primary" onClick={handleShow}>

@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <HomePage /> } />
         <Route path="/funcionarios" element={ <PeopleList apiURL={ apiURL } /> } />
-        <Route path="/funcionarios/:id" element={ <PeopleDetails apiURL={ apiURL } /> } />
+        <Route path="/funcionarios/:id" element={ <PeopleDetails apiURL={ apiURL } form={ form } setForm={ setForm } /> } />
         <Route path="/cadastrar" element={ <AddPeople apiURL={ apiURL } form={ form } setForm={ setForm } /> } />
       </Routes>
     </div>

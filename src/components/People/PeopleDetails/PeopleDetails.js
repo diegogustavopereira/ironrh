@@ -4,8 +4,9 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap"
 import { useNavigate, useParams } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faPhone, faCalendarCheck, faCircleCheck, faBuildingUser, faMoneyCheckDollar } from "@fortawesome/free-solid-svg-icons";
+import EditPeople from "../EditPeople/EditPeople";
 
-function PeopleDetails({ apiURL }) {
+function PeopleDetails({ apiURL, form, setForm }) {
     const [employee, setEmployee] = useState({})
     const { id } = useParams()
     const navigate = useNavigate()
@@ -35,6 +36,8 @@ function PeopleDetails({ apiURL }) {
                     <Card.Title className="m-0">
                         <h3>{employee.name}</h3>
                     </Card.Title>
+                    { employee.active && <h6 className="text-success">Este funcionário está ativo na empresa</h6>}
+                    { !employee.active && <h6 className="text-secondary">Este funcionário não está ativo na empresa</h6> }
                 </Card.Header>
                 <Card.Body>
                     <Card.Title>Informações trabalhista</Card.Title>
@@ -71,10 +74,14 @@ function PeopleDetails({ apiURL }) {
                     </Row>
                     <Row className="mt-3">
                         <Col>
-                            Editar funcionário
+                            <EditPeople id={ id } apiURL={ apiURL} form={ form } setForm={ setForm } />
                         </Col>
                         <Col>
-                            <Button variant="secondary">Voltar</Button>
+                            <Button
+                                variant="secondary"
+                                onClick={() => navigate(-1)}
+                            >
+                                Voltar</Button>
                         </Col>
                         <Col>
                             <Button

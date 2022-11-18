@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Button, Container, Form, Spinner, Table } from "react-bootstrap"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 function PeopleList({ apiURL }) {
     // -------- CRIAÇÃO DE ESTADOS DO COMPONENTE --------
